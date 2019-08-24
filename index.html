@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="myDiv">
+      <form id="myForm">
+        <input type="text" id="title" placeholder="Enter title" />
+        <button id="myBtn">Submit</button>
+      </form>
+      <div class="note">
+        <ul id="listItem"></ul>
+      </div>
+    </div>
+    <script>
+      let myForm = document.querySelector("#myForm");
+      let btn = document.querySelector("#myBtn");
+      let datas = [];
+      let submitForm = e => {
+        e.preventDefault();
+        let title = document.querySelector("#title").value;
+        if (title) {
+          addTask(title);
+        }
+      };
+      btn.addEventListener("click", submitForm);
+
+      const addTask = title => {
+        addTaskDom(title);
+        let data = {
+          title
+        };
+        datas.push(data);
+        console.log(datas);
+        document.querySelector("#title").value = "";
+      };
+
+      const renderTask = () => {
+        if (!datas.data.length) return;
+        else {
+          let title = datas.map(data => data);
+          addTaskDom(title);
+        }
+      };
+      const addTaskDom = text => {
+        let listItem = document.querySelector("#listItem");
+        let li = document.createElement("li");
+        li.innerText = text;
+
+        let buttons = document.createElement("div");
+        let delBtn = document.createElement("button");
+        let updateBtn = document.createElement("button");
+
+        updateBtn.addEventListener("click", editTask);
+
+        delBtn.innerText = "Delete";
+        updateBtn.innerText = "Update";
+        updateBtn.classList.add("update");
+
+        buttons.appendChild(delBtn);
+        buttons.appendChild(updateBtn);
+
+        li.appendChild(buttons);
+        listItem.appendChild(li);
+      };
+
+      const editTask = () => {
+        // let data = datas.splice(0,1);
+        // console.log(data);
+        let editBtn = document.querySelector(".update");
+        itemToEdit = editBtn.parentElement.parentElement.parentElement;
+        document.querySelector("#title").value = itemToEdit.innerText;
+      };
+    </script>
+  </body>
+</html>
